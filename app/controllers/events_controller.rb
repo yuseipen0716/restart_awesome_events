@@ -2,6 +2,8 @@ class EventsController < ApplicationController
     skip_before_action :authenticate, only: :show
     def show
         @event = Event.find(params[:id])
+        @ticket = current_user && current_user.tickets.find_by(event: @event) # 閲覧しているイベントの参加状況を@ticketに格納
+        @tickets = @event.tickets.includes(:user).order(:created_at) # N+1問題解決のためにincludesメソッドを使用している
     end
 
     def new
