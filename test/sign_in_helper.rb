@@ -6,13 +6,26 @@ module SignInHelper
             uid: user.uid,
             info: { nickname: user.name,
                     image: user.image_url })
+        
+        case 
+        when respond_to?(:visit)
+            visit root_url
+            click_on "Githubでログイン"
+        when 
+            respond_to?(:get)
+            get "/auth/github/callback"
+        else
+            raise NotImplementedError.new
+        end
 
-        visit root_url
-        click_on "Githubでログイン"
         @current_user = user
     end
 
     def current_user
         @current_user
     end
+end
+
+class AcrionDispatch::IntegrationTest
+    include SignInHelper
 end
