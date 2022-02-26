@@ -26,6 +26,6 @@ module SignInHelper
     end
 end
 
-class AcrionDispatch::IntegrationTest
+class ActionDispatch::IntegrationTest
     include SignInHelper
 end
